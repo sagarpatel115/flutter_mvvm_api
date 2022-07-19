@@ -30,28 +30,20 @@ class NetworkApiServices extends BaseApiServices{
           body: data
         ).timeout(Duration(seconds: 10));
        responseJson = returnResponse(res);
-     
-
-    }
+        }
     on SocketException{
       throw FetchDataException('No Internet Connection');
     }
-
-  return responseJson;
-   
-  }
-
-
+ return responseJson;
+     }
    dynamic returnResponse(http.Response response){
 
     switch(response.statusCode){
        case 200:
             dynamic resJson = jsonDecode(response.body);
             return resJson;
-
        case 400:
             throw BadRequestException(response.body.toString());     
-        
        case 401:
             throw UnauthorisedException(response.body.toString()); 
        default:
